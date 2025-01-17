@@ -1,0 +1,52 @@
+.form_container {
+  display: flex;
+  margin: 45px 0px;
+  width: 500px;
+  height: 450px;
+  background-color: white;
+  box-shadow: 3px 4px 36px -6px rgba(0, 0, 0, 0.4);
+  border-radius: 50px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.from_heading {
+  font-size: 25px;
+  font-weight: 400;
+  color: #2c444e;
+  margin-bottom: 20px;
+}
+
+.profile_img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.text {
+  width: 320px;
+  height: 35px;
+  padding: 5px;
+  margin: 5px 0;
+  outline: none;
+  border: 1px solid #2c444e;
+  border-radius: 2px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  font-size: 18px;
+  font-weight: 500;
+  padding: 12px 25px;
+  color: white;
+  background-color: #ffc801;
+  border-radius: 12px;
+  margin: 10px 0 0 0;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
