@@ -13,7 +13,7 @@ const App = () => {
       const { data } = await axios.get(url, { withCredentials: true });
       const userData = data.user._json;
       const currDate = Math.floor(Date.now() / 1000);
-      setUser({...userData, createdAt: currDate });
+      setUser({ ...userData, createdAt: currDate });
     } catch (err) {
       console.log(err);
     }

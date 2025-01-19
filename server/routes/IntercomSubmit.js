@@ -11,8 +11,6 @@ router.post("/", async (req, res) => {
     return res.status(400).send({ message: "All fields are required." });
   }
 
-  console.log(userEmail);
-
   const intercomRequest = {
     user: { user_id: userId, email: userEmail },
     category,
@@ -27,7 +25,7 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res.status(500).send({
       message: "Failed to submit the request to Intercom.",
-      error: error.message,
+      error: error.response || error.message,
     });
   }
 });

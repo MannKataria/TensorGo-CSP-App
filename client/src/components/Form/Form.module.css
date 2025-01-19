@@ -1,0 +1,129 @@
+.form_wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+.form_container {
+  display: flex;
+  width: 70%;
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 3px 4px 36px -6px rgba(0, 0, 0, 0.4);
+  border-radius: 50px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_heading {
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: #2c444e;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  padding: 1rem;
+}
+
+.form_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 10px 0px;
+  width: 100%;
+}
+
+label {
+  margin-bottom: 1rem;
+}
+
+.form_input {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  height: 3rem;
+  width: 100%;
+  padding: 0.2rem;
+  border: solid 0.1rem black;
+  border-radius: 0.1rem;
+}
+
+.profile_img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.text {
+  width: 320px;
+  height: 35px;
+  padding: 5px;
+  margin: 5px 0;
+  outline: none;
+  border: 1px solid #2c444e;
+  border-radius: 2px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  font-size: 18px;
+  font-weight: 700;
+  padding: 12px 25px;
+  color: white;
+  border-radius: 12px;
+  margin: 10px 0px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.submit {
+  /* background-color: rgb(4, 132, 27); */
+  background-color: #ffc801;
+}
+
+.log_out {
+  background-color: rgb(243, 57, 57);
+}
+
+@media (max-width: 1200px) {
+  .form_container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .form_wrap{
+    margin-top: 3rem;
+    width: 100%;
+  }
+  .form_container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 700px) {
+  .form_container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 500px) {
+  .form_container {
+    width: 90%;
+  }
+  .form {
+    padding: 0;
+  }
+}

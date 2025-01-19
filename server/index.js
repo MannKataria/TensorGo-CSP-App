@@ -7,6 +7,7 @@ const passport = require("passport");
 const passportSetup = require("./passport");
 const authRoute = require("./routes/auth");
 const IntercomSubmit = require("./routes/IntercomSubmit");
+const IntercomMsgs = require("./routes/IntercomMsgs");
 const app = express();
 
 app.use(
@@ -30,6 +31,7 @@ app.use(
 
 app.use("/auth", authRoute);
 app.use("/submit", IntercomSubmit);
+app.use("/user", IntercomMsgs);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

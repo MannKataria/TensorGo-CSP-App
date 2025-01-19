@@ -25,7 +25,6 @@ const sendMessage = async (data) => {
       }
     );
 
-    // const data1 = await resp.json();
     console.log(resp.data);
     return resp.data;
   } catch (err) {

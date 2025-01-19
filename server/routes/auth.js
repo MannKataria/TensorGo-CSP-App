@@ -34,37 +34,9 @@ router.get(
 router.get("/google", passport.authenticate("google", ["profile", "email"]));
 
 router.get("/logout", (req, res) => {
-  req.logOut(() => {
+  req.logout(() => {
     res.redirect(process.env.GOOGLE_CLIENT_URL);
   });
 });
 
 module.exports = router;
-// app.get("/", (req, res) => {
-//   res.send("<h1><a href='/auth/google'>Login with Google</a></h1>");
-// });
-
-// app.get(
-//   "/auth/google",
-//   passport.authenticate("google", { scope: ["profile", "email"] })
-// );
-
-// app.get(
-//   "/auth/google/callback",
-//   passport.authenticate("google", { failureRedirect: "/" }),
-//   (req, res) => {
-//     res.redirect("/profile");
-//   }
-// );
-
-// app.get("/profile", (req, res) => {
-//   res.send(
-//     `<h1>Welcome ${req.user.displayName}</h1><br><h1><a href='/logout'>Logout</a></h1>`
-//   );
-// });
-
-// app.get("/logout", (req, res) => {
-//   req.logOut(() => {
-//     res.redirect("/");
-//   });
-// });
