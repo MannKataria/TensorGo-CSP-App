@@ -1,8 +1,40 @@
 const router = require("express").Router();
 const bodyParser = require("body-parser");
-const createIntercomRequest = require("../Intercom");
+const axios = require("axios");
 
 router.use(bodyParser.json());
+
+const sendMessage = async (data) => {
+  try {
+    const resp = await axios.post(
+      `${process.env.INTERCOM_API_URL}/messages`,
+      {
+        from: {
+          type: "user",
+          user_id: data.user.user_id,
+          email: data.user.email,
+        },
+        body: data.message,
+        referer: "http://localhost:5000",
+        custom_attributes: {
+          category: data.category,
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Intercom-Version": "2.11",
+          Authorization: `Bearer ${process.env.INTERCOM_ACCESS_TOKEN}`,
+        },
+      }
+    );
+
+    console.log(resp.data);
+    return resp.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 router.post("/", async (req, res) => {
   const { userId, category, comments, userEmail } = req.body;
@@ -17,7 +49,7 @@ router.post("/", async (req, res) => {
     message: comments,
   };
   try {
-    const intercomResponse = await createIntercomRequest(intercomRequest);
+    const intercomResponse = await sendMessage(intercomRequest);
     res.status(200).send({
       message: "Request submitted successfully.",
       data: intercomResponse,

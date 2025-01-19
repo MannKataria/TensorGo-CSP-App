@@ -5,8 +5,21 @@ import styles from "./Messages.module.css";
 const Messages = ({ userId }) => {
   const [conversations, setConversations] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [filteredMessages, setFilteredMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [category, setCategory] = useState("");
+
+  const updateCategory = () => {
+    if (category === "all") {
+      setFilteredMessages(messages);
+      return;
+    }
+    const tmp = messages.filter(
+      (message) => message.custom_attributes.category === category
+    );
+    setFilteredMessages(tmp);
+  };
 
   useEffect(() => {
     const fetchConversations = async () => {
@@ -55,24 +68,56 @@ const Messages = ({ userId }) => {
         ) : (
           <>
             <h3>Customer Service Requests</h3>
-            {messages.length === 0 ? (
+            {filteredMessages.length === 0 ? (
               <p>No messages found.</p>
             ) : (
-              <ul>
-                {messages.map((message) => (
-                  <li key={message.id}>
-                    <p>
-                      {message.source.author.type === "user"
-                        ? "You: "
-                        : "Admin: "}
-                      {message.source.body}
-                    </p>
-                    <small>
-                      {new Date(message.created_at * 1000).toLocaleString()}
-                    </small>
-                  </li>
-                ))}
-              </ul>
+              <>
+                <div className={styles.category}>
+                  <label>Category:</label>
+                  <select
+                    value={category}
+                    onChange={(e) => {
+                      setCategory(e.target.value);
+                      updateCategory();
+                    }}
+                    className={styles.select_input}
+                  >
+                    <option value="all">All</option>
+                    <option value="General Queries">General Queries</option>
+                    <option value="Product Features Queries">
+                      Product Features Queries
+                    </option>
+                    <option value="Product Pricing Queries">
+                      Product Pricing Queries
+                    </option>
+                    <option value="Product Feature Implementation Requests">
+                      Product Feature Implementation Requests
+                    </option>
+                  </select>
+                </div>
+                <ul>
+                  {filteredMessages.map((message) => (
+                    <li key={message.id}>
+                      <p>
+                        <strong>
+                          {message.source.author.type === "user"
+                            ? "You"
+                            : "Admin"}
+                          :
+                        </strong>{" "}
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: message.source.body,
+                          }}
+                        />
+                      </p>
+                      <small>
+                        {new Date(message.created_at * 1000).toLocaleString()}
+                      </small>
+                    </li>
+                  ))}
+                </ul>
+              </>
             )}
           </>
         )}

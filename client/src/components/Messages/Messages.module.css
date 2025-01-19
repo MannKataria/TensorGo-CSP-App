@@ -4,16 +4,40 @@
   align-items: center;
   width: 50%;
 }
+
 .messages_container {
   display: flex;
   width: 70%;
   padding: 1rem;
   background-color: white;
   box-shadow: 3px 4px 36px -6px rgba(0, 0, 0, 0.4);
-  border-radius: 50px;
+  border-radius: 2rem;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 10px 0px;
+  width: 100%;
+}
+
+label {
+  margin-bottom: 1rem;
+}
+
+.select_input {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  height: 3rem;
+  width: 100%;
+  padding: 0.2rem;
+  border: solid 0.1rem black;
+  border-radius: 0.5rem;
 }
 
 ul {
