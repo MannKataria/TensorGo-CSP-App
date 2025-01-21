@@ -10,17 +10,6 @@ const Messages = ({ userId }) => {
   const [error, setError] = useState("");
   const [category, setCategory] = useState("");
 
-  const updateCategory = () => {
-    if (category === "all") {
-      setFilteredMessages(messages);
-      return;
-    }
-    const tmp = messages.filter(
-      (message) => message.custom_attributes.category === category
-    );
-    setFilteredMessages(tmp);
-  };
-
   useEffect(() => {
     const fetchConversations = async () => {
       try {
@@ -39,15 +28,13 @@ const Messages = ({ userId }) => {
   }, [userId]);
 
   useEffect(() => {
-    const fetchMessages = async () => {
+    const fetchMessages = async (conversationId) => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API_URL}/user/conversations/${conversations[0]}`
+          `${process.env.REACT_APP_API_URL}/user/conversations/${conversationId}`
         );
-        console.log(response);
         const tmp = response.data;
-        const tmp2 = tmp.map((el) => el);
-        setMessages(tmp2);
+        setMessages((prevMessages) => [...prevMessages, ...tmp]);
       } catch (err) {
         setError("Failed to fetch messages");
       } finally {
@@ -55,8 +42,29 @@ const Messages = ({ userId }) => {
       }
     };
 
-    if (conversations.length !== 0) fetchMessages();
+    if (conversations.length !== 0) {
+      conversations.map((conversation) => fetchMessages(conversation));
+    }
   }, [conversations]);
+
+  useEffect(() => {
+    console.log(messages, messages.length);
+    setFilteredMessages(messages);
+  }, [messages]);
+
+  const updateCategory = () => {
+    if (category === "all") {
+      setFilteredMessages(messages);
+      return;
+    }
+    const tmp = messages.filter(
+      (message) => message.custom_attributes.category === category
+    );
+    setFilteredMessages(tmp);
+  };
+  useEffect(() => {
+    updateCategory();
+  }, [category]);
 
   return (
     <div className={styles.messages_wrap}>
@@ -68,56 +76,53 @@ const Messages = ({ userId }) => {
         ) : (
           <>
             <h3>Customer Service Requests</h3>
+            <div className={styles.category}>
+              <label>Category:</label>
+              <select
+                value={category}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
+                className={styles.select_input}
+              >
+                <option value="all">All</option>
+                <option value="General Queries">General Queries</option>
+                <option value="Product Features Queries">
+                  Product Features Queries
+                </option>
+                <option value="Product Pricing Queries">
+                  Product Pricing Queries
+                </option>
+                <option value="Product Feature Implementation Requests">
+                  Product Feature Implementation Requests
+                </option>
+              </select>
+            </div>
             {filteredMessages.length === 0 ? (
               <p>No messages found.</p>
             ) : (
-              <>
-                <div className={styles.category}>
-                  <label>Category:</label>
-                  <select
-                    value={category}
-                    onChange={(e) => {
-                      setCategory(e.target.value);
-                      updateCategory();
-                    }}
-                    className={styles.select_input}
-                  >
-                    <option value="all">All</option>
-                    <option value="General Queries">General Queries</option>
-                    <option value="Product Features Queries">
-                      Product Features Queries
-                    </option>
-                    <option value="Product Pricing Queries">
-                      Product Pricing Queries
-                    </option>
-                    <option value="Product Feature Implementation Requests">
-                      Product Feature Implementation Requests
-                    </option>
-                  </select>
-                </div>
-                <ul>
-                  {filteredMessages.map((message) => (
-                    <li key={message.id}>
-                      <p>
-                        <strong>
-                          {message.source.author.type === "user"
-                            ? "You"
-                            : "Admin"}
-                          :
-                        </strong>{" "}
-                        <p
-                          dangerouslySetInnerHTML={{
-                            __html: message.source.body,
-                          }}
-                        />
-                      </p>
-                      <small>
-                        {new Date(message.created_at * 1000).toLocaleString()}
-                      </small>
-                    </li>
-                  ))}
-                </ul>
-              </>
+              <ul>
+                {filteredMessages.map((message) => (
+                  <li key={message.id}>
+                    <p>
+                      <strong>
+                        {message.source.author.type === "user"
+                          ? "You"
+                          : "Admin"}
+                        :
+                      </strong>{" "}
+                      <p
+                        dangerouslySetInnerHTML={{
+                          __html: message.source.body,
+                        }}
+                      />
+                    </p>
+                    <small>
+                      {new Date(message.created_at * 1000).toLocaleString()}
+                    </small>
+                  </li>
+                ))}
+              </ul>
             )}
           </>
         )}

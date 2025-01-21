@@ -29,7 +29,6 @@ const sendMessage = async (data) => {
       }
     );
 
-    console.log(resp.data);
     return resp.data;
   } catch (err) {
     console.log(err);
@@ -45,7 +44,7 @@ router.post("/", async (req, res) => {
 
   const intercomRequest = {
     user: { user_id: userId, email: userEmail },
-    category,
+    category: category,
     message: comments,
   };
   try {

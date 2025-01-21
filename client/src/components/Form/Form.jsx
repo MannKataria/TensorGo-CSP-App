@@ -29,7 +29,6 @@ const Form = (props) => {
       setSuccessMessage("Request submitted successfully.");
       setCategory("");
       setComments("");
-      console.log(response);
     } catch (error) {
       setErrorMessage("Failed to submit request.");
     } finally {
